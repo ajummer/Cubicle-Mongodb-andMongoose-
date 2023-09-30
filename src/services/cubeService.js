@@ -8,15 +8,11 @@ const cubes = [
     difficultyLevel: 3,
   },
 ];
-const uniqid = require("uniqid");
 
-exports.createCube = (cubeData) => {
-  const newCube = {
-    id: uniqid(),
-    ...cubeData,
-  };
+const Cube = require("./../models/Cube");
 
-  cubes.push(newCube);
+exports.createCube =  async (cubeData) => {
+  const newCube = await Cube.create(cubeData);
   return newCube;
 };
 
@@ -24,13 +20,19 @@ exports.getAllCubes = (search, from, to) => {
   let filteredCubes = [...cubes];
 
   if (search) {
-    filteredCubes = filteredCubes.filter((cube) => cube.name.toLowerCase().includes(search.toLowerCase()));
+    filteredCubes = filteredCubes.filter((cube) =>
+      cube.name.toLowerCase().includes(search.toLowerCase())
+    );
   }
   if (from) {
-    filteredCubes = filteredCubes.filter((cube) => cube.difficultyLevel >= Number(from))
+    filteredCubes = filteredCubes.filter(
+      (cube) => cube.difficultyLevel >= Number(from)
+    );
   }
   if (to) {
-    filteredCubes = filteredCubes.filter((cube) => cube.difficultyLevel <= Number(to));
+    filteredCubes = filteredCubes.filter(
+      (cube) => cube.difficultyLevel <= Number(to)
+    );
   }
   return filteredCubes;
 };

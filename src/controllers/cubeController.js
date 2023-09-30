@@ -9,9 +9,9 @@ router.get("/create", (req, res) => {
   res.render("create");
 });
 
-router.post("/create", (req, res) => {
+router.post("/create",  async (req, res) => {
   const { name, description, imageUrl, difficultyLevel } = req.body;
-  const newCube = createCube({
+  const newCube = await createCube({
     name,
     description,
     imageUrl,
