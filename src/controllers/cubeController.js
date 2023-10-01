@@ -3,6 +3,7 @@ const {
   createCube,
   getAllCubes,
   getSingleCube,
+  attachAccessory,
 } = require("../services/cubeService.js");
 
 const { getAllAccessories } = require("../services/accessoryService.js");
@@ -35,7 +36,14 @@ router.get("/details/:id/attach-accessory", async (req, res) => {
   const cube = await getSingleCube(req.params.id).lean();
   const accessories = await getAllAccessories();
   const hasAccessories = accessories.length > 0;
-  res.render("accessories/attach", { accessories, cube , hasAccessories });
+  res.render("accessories/attach", { accessories, cube, hasAccessories });
+});
+
+router.post("/details/:id/attach-accessory", async (req, res) => {
+  const cubeId = req.params.id;
+  const accessoryId = req.body.accessory;
+  await attachAccessory(cubeId, accessoryId);
+  res.redirect(`/cubes/details/${cubeId}/attach-accessory`)
 });
 
 module.exports = router;
