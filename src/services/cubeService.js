@@ -27,7 +27,7 @@ exports.getAllCubes = async (search, from, to) => {
 };
 
 exports.getSingleCube = (id) => {
-  const cube = Cube.findById(id);
+  const cube = Cube.findById(id).populate("accessories");
   return cube;
 };
 

@@ -29,6 +29,7 @@ router.get("/details/:id", async (req, res) => {
     res.redirect("/404");
     return;
   }
+
   res.render("details", { cube });
 });
 
@@ -43,7 +44,7 @@ router.post("/details/:id/attach-accessory", async (req, res) => {
   const cubeId = req.params.id;
   const accessoryId = req.body.accessory;
   await attachAccessory(cubeId, accessoryId);
-  res.redirect(`/cubes/details/${cubeId}/attach-accessory`)
+  res.redirect(`/cubes/details/${cubeId}`)
 });
 
 module.exports = router;
