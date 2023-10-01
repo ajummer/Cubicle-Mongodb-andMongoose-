@@ -12,7 +12,7 @@ router.post("/create", async (req, res) => {
     description,
     imageUrl,
   });
-  res.redirect("/")
+  res.redirect("/");
 });
 
 module.exports = router;

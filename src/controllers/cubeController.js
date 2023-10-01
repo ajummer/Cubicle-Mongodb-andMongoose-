@@ -22,12 +22,15 @@ router.post("/create", async (req, res) => {
 
 router.get("/details/:id", async (req, res) => {
   const cube = await getSingleCube(req.params.id).lean();
-  console.log(req.params)
   if (!cube) {
     res.redirect("/404");
     return;
   }
   res.render("details", { cube });
+});
+
+router.get("/details/:id/attach-accessory", (req, res) => {
+  res.render("accessories/attach")
 });
 
 module.exports = router;
