@@ -9,3 +9,7 @@ exports.getAllAccessories = async () => {
   const accessories = await Accessory.find().lean();
   return accessories;
 };
+
+exports.getWithoutOwned = (accessoryIds) => {
+  return Accessory.find({ _id: { $nin: accessoryIds } });
+};

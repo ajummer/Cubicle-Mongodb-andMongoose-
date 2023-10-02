@@ -6,7 +6,7 @@ const {
   attachAccessory,
 } = require("../services/cubeService.js");
 
-const { getAllAccessories } = require("../services/accessoryService.js");
+const { getAllAccessories,getWithoutOwned } = require("../services/accessoryService.js");
 
 router.get("/create", (req, res) => {
   res.render("create");
@@ -35,7 +35,10 @@ router.get("/details/:id", async (req, res) => {
 
 router.get("/details/:id/attach-accessory", async (req, res) => {
   const cube = await getSingleCube(req.params.id).lean();
-  const accessories = await getAllAccessories();
+  const accessoryIds = cube.accessories ? cube.accessories.map((a) => a._id) : [];
+  
+  const accessories = await getWithoutOwned(accessoryIds).lean();
+ 
   const hasAccessories = accessories.length > 0;
   res.render("accessories/attach", { accessories, cube, hasAccessories });
 });
